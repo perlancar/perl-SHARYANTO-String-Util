@@ -4,6 +4,8 @@ use 5.010;
 use strict;
 use warnings;
 
+# VERSION
+
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(trim_blank_lines);
 
