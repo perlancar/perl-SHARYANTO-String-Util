@@ -1,5 +1,11 @@
 Revision history for SHARYANTO-String-Util
 
+0.18    2012-03-23
+
+        No functional changes. Increase version number to avoid conflict with
+        pre-split version.
+
+
 0.01    2012-03-23
 
         First release. Split from SHARYANTO-Utils to avoid circular dependency
