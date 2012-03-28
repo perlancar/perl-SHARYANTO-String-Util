@@ -1,5 +1,10 @@
 Revision history for SHARYANTO-String-Util
 
+0.19    2012-03-28
+
+        - Add ellipsis().
+
+
 0.18    2012-03-23
 
         No functional changes. Increase version number to avoid conflict with
