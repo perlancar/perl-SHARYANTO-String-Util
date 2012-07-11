@@ -7,7 +7,7 @@ use warnings;
 # VERSION
 
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(trim_blank_lines ellipsis);
+our @EXPORT_OK = qw(trim_blank_lines ellipsis indent);
 
 sub trim_blank_lines {
     local $_ = shift;
@@ -29,6 +29,13 @@ sub ellipsis {
     }
 }
 
+sub indent {
+    my ($indent, $str) = @_;
+
+    $str =~ s/^/$indent/mg;
+    $str;
+}
+
 1;
 # ABSTRACT: String utilities
 
@@ -45,6 +52,12 @@ middle. Blank lines include lines with only whitespaces in them.
 Return $str unmodified if $str's length is less than $maxlen (default 80).
 Otherwise cut $str to ($maxlen - length($ellipsis)) and append $ellipsis
 (default '...') at the end.
+
+=head2 indent($indent, $str) => STR
+
+Indent every line in $str with $indent. Example:
+
+ indent('  ', "one\ntwo\nthree") # "  one\n  two\n  three"
 
 
 =head1 SEE ALSO
