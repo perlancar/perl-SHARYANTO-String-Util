@@ -1,22 +1,27 @@
 Revision history for SHARYANTO-String-Util
 
-0.20    2012-07-11
+0.21    2012-07-12 (SHARYANTO)
+
+        - Add 'indent_blank_lines' option to indent().
+
+
+0.20    2012-07-11 (SHARYANTO)
 
         - Add indent().
 
 
-0.19    2012-03-28
+0.19    2012-03-28 (SHARYANTO)
 
         - Add ellipsis().
 
 
-0.18    2012-03-23
+0.18    2012-03-23 (SHARYANTO)
 
         No functional changes. Increase version number to avoid conflict with
         pre-split version.
 
 
-0.01    2012-03-23
+0.01    2012-03-23 (SHARYANTO)
 
         First release. Split from SHARYANTO-Utils to avoid circular dependency
         with Perinci-Object.
