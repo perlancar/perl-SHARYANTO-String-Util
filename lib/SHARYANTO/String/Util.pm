@@ -30,9 +30,14 @@ sub ellipsis {
 }
 
 sub indent {
-    my ($indent, $str) = @_;
+    my ($indent, $str, $opts) = @_;
+    $opts //= {};
 
-    $str =~ s/^/$indent/mg;
+    if ($opts->{indent_blank_lines} // 1) {
+        $str =~ s/^/$indent/mg;
+    } else {
+        $str =~ s/^([^\r\n]*\S[^\r\n]*)/$indent$1/mg;
+    }
     $str;
 }
 
@@ -53,11 +58,22 @@ Return $str unmodified if $str's length is less than $maxlen (default 80).
 Otherwise cut $str to ($maxlen - length($ellipsis)) and append $ellipsis
 (default '...') at the end.
 
-=head2 indent($indent, $str) => STR
+=head2 indent($indent, $str, \%opts) => STR
 
 Indent every line in $str with $indent. Example:
 
  indent('  ', "one\ntwo\nthree") # "  one\n  two\n  three"
+
+%opts is optional. Known options:
+
+=over 4
+
+=item * indent_blank_lines => BOOL (default 1)
+
+If set to false, does not indent blank lines (i.e., lines containing only zero
+or more whitespaces).
+
+=back
 
 
 =head1 FAQ
