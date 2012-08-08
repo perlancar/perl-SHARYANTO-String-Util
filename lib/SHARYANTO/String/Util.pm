@@ -50,10 +50,11 @@ sub linenum {
     $opts->{skip_empty} //= 1;
 
     my $i = 0;
-    $str =~ s/^((\S)?.*)/
+    $str =~ s/^(([\t ]*\S)?.*)/
         sprintf(join("",
                      "%",
-                     ($opts->{zeropad} && !($opts->{skip_empty} && !defined($2)) ? "0" : ""),
+                     ($opts->{zeropad} && !($opts->{skip_empty}
+                                                && !defined($2)) ? "0" : ""),
                      $opts->{width}, "s",
                      "|%s"),
                 ++$i && $opts->{skip_empty} && !defined($2) ? "" : $i,
