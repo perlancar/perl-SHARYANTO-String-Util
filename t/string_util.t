@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More 0.96;
+use Test::More 0.98;
 
 use SHARYANTO::String::Util qw(trim_blank_lines ellipsis indent linenum pad);
 
