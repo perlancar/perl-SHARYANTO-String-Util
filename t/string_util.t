@@ -6,7 +6,7 @@ use warnings;
 
 use Test::More 0.96;
 
-use SHARYANTO::String::Util qw(trim_blank_lines ellipsis indent linenum);
+use SHARYANTO::String::Util qw(trim_blank_lines ellipsis indent linenum pad);
 
 ok( !defined(trim_blank_lines(undef)), "trim_blank_lines undef" );
 is( trim_blank_lines("\n1\n\n2\n\n \n"), "1\n\n2\n", "trim_blank_lines 1" );
@@ -30,6 +30,16 @@ is(linenum($str, {zeropad=>1}),
    "0001|a\n0002|b\n    |\n0004| d\n0005|0", "linenum opt:zeropad");
 is(linenum($str, {skip_empty=>0}),
    "   1|a\n   2|b\n   3|\n   4| d\n   5|0", "linenum opt:skip_empty");
+
+subtest "pad" => sub {
+    is(pad("1234", 4), "1234");
+    is(pad("1234", 6), "1234  ", "right");
+    is(pad("1234", 6, "l"), "  1234", "left");
+    is(pad("1234", 6, "c"), " 1234 ", "center");
+    is(pad("1234", 6, "c", "x"), "x1234x", "padchar");
+    is(pad("1234", 1), "1234", "trunc=0");
+    is(pad("1234", 1, undef, undef, 1), "1", "trunc=1");
+};
 
 DONE_TESTING:
 done_testing();
