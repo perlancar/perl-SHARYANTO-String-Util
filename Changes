@@ -1,6 +1,11 @@
 Revision history for SHARYANTO-String-Util
 
-0.24    2012-08-08 (SHARYANTO)
+0.25    2013-10-31 (SHARYANTO)
+
+        - Add qqquote().
+
+
+0.24    2012-04-09 (SHARYANTO)
 
         - Add pad().
 
@@ -32,12 +37,11 @@ Revision history for SHARYANTO-String-Util
 
 0.18    2012-03-23 (SHARYANTO)
 
-        No functional changes. Increase version number to avoid conflict with
-        pre-split version.
+        - No functional changes. Increase version number to avoid conflict with
+          pre-split version.
 
 
 0.01    2012-03-23 (SHARYANTO)
 
-        First release. Split from SHARYANTO-Utils to avoid circular dependency
-        with Perinci-Object.
-
+        - First release. Split from SHARYANTO-Utils to avoid circular dependency
+          with Perinci-Object.
