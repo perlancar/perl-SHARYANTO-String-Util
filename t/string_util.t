@@ -6,7 +6,10 @@ use warnings;
 
 use Test::More 0.98;
 
-use SHARYANTO::String::Util qw(trim_blank_lines ellipsis indent linenum pad);
+use SHARYANTO::String::Util qw(
+                                  trim_blank_lines ellipsis indent linenum pad
+                                  qqquote
+                          );
 
 ok( !defined(trim_blank_lines(undef)), "trim_blank_lines undef" );
 is( trim_blank_lines("\n1\n\n2\n\n \n"), "1\n\n2\n", "trim_blank_lines 1" );
@@ -39,6 +42,13 @@ subtest "pad" => sub {
     is(pad("1234", 6, "c", "x"), "x1234x", "padchar");
     is(pad("1234", 1), "1234", "trunc=0");
     is(pad("1234", 1, undef, undef, 1), "1", "trunc=1");
+};
+
+subtest "qqquote" => sub {
+    is(qqquote("a"),    '"a"');
+    is(qqquote("a\n"),  '"a\\n"');
+    is(qqquote('"'),    '"\\""');
+    is(qqquote('$foo'), '"\\$foo"');
 };
 
 DONE_TESTING:
