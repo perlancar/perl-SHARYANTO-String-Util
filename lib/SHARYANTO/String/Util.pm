@@ -212,4 +212,9 @@ closely, but I couldn't a module that provides a function to do something like
 this. L<String::Escape>, for example, provides C<qqbackslash> but it does not
 escape C<$>.
 
+
+=head1 SEE ALSO
+
+L<SHARYANTO>
+
 =cut
