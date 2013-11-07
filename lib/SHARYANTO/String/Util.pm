@@ -8,7 +8,58 @@ use warnings;
 
 use Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(trim_blank_lines ellipsis indent linenum pad qqquote);
+our @EXPORT_OK = qw(
+                       ltrim
+                       rtrim
+                       trim
+                       ltrim_lines
+                       rtrim_lines
+                       trim_lines
+                       trim_blank_lines
+                       ellipsis
+                       indent
+                       linenum
+                       pad
+                       qqquote
+               );
+
+sub ltrim {
+    my $str = shift;
+    $str =~ s/\A\s+//s;
+    $str;
+}
+
+sub rtrim {
+    my $str = shift;
+    $str =~ s/\s+\z//s;
+    $str;
+}
+
+sub trim {
+    my $str = shift;
+    $str =~ s/\A\s+//s;
+    $str =~ s/\s+\z//s;
+    $str;
+}
+
+sub ltrim_lines {
+    my $str = shift;
+    $str =~ s/^[ \t]+//mg; # XXX other unicode non-newline spaces
+    $str;
+}
+
+sub rtrim_lines {
+    my $str = shift;
+    $str =~ s/[ \t]+$//mg;
+    $str;
+}
+
+sub trim_lines {
+    my $str = shift;
+    $str =~ s/^[ \t]+//mg;
+    $str =~ s/[ \t]+$//mg;
+    $str;
+}
 
 sub trim_blank_lines {
     local $_ = shift;
@@ -123,11 +174,44 @@ sub qqquote {
 
 =head1 FUNCTIONS
 
+=head2 ltrim($str) => STR
+
+Trim whitespaces (including newlines) at the beginning of string. Equivalent to:
+
+ $str =~ s/\A\s+//s;
+
+=head2 ltrim_lines($str) => STR
+
+Trim whitespaces (not including newlines) at the beginning of each line of
+string. Equivalent to:
+
+ $str =~ s/^\s+//mg;
+
+=head2 rtrim($str) => STR
+
+Trim whitespaces (including newlines) at the end of string. Equivalent to:
+
+ $str =~ s/[ \t]+\z//s;
+
+=head2 rtrim_lines($str) => STR
+
+Trim whitespaces (not including newlines) at the end of each line of
+string. Equivalent to:
+
+ $str =~ s/[ \t]+$//mg;
+
+=head2 trim($str) => STR
+
+ltrim + rtrim.
+
+=head2 trim_lines($str) => STR
+
+ltrim_lines + rtrim_lines.
+
 =head2 trim_blank_lines($str) => STR
 
 Trim blank lines at the beginning and the end. Won't trim blank lines in the
 middle. Blank lines include lines with only whitespaces in them.
-
 
 =head2 ellipsis($str[, $maxlen, $ellipsis]) => STR
 
