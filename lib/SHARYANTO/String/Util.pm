@@ -21,6 +21,8 @@ our @EXPORT_OK = qw(
                        linenum
                        pad
                        qqquote
+                       common_prefix
+                       common_suffix
                );
 
 sub ltrim {
@@ -169,6 +171,40 @@ sub qqquote {
 }
 # END COPY PASTE FROM Data::Dump
 
+sub common_prefix {
+    return undef unless @_;
+    my $i;
+  L1:
+    for ($i=0; $i < length($_[0]); $i++) {
+        for (@_[1..$#_]) {
+            if (length($_) < $i) {
+                $i--; last L1;
+            } else {
+                last L1 if substr($_, $i, 1) ne substr($_[0], $i, 1);
+            }
+        }
+    }
+    substr($_[0], 0, $i);
+}
+
+sub common_suffix {
+    require List::Util;
+
+    return undef unless @_;
+    my $i;
+  L1:
+    for ($i = 0; $i < length($_[0]); $i++) {
+        for (@_[1..$#_]) {
+            if (length($_) < $i) {
+                $i--; last L1;
+            } else {
+                last L1 if substr($_, -($i+1), 1) ne substr($_[0], -($i+1), 1);
+            }
+        }
+    }
+    $i ? substr($_[0], -$i) : "";
+}
+
 1;
 # ABSTRACT: String utilities
 
@@ -295,6 +331,14 @@ This code is taken from C<quote()> in L<Data::Dump>. Maybe I didn't look more
 closely, but I couldn't a module that provides a function to do something like
 this. L<String::Escape>, for example, provides C<qqbackslash> but it does not
 escape C<$>.
+
+=head2 common_prefix(@LIST) => STR
+
+Given a list of strings, return common prefix.
+
+=head2 common_suffix(@LIST) => STR
+
+Given a list of strings, return common suffix.
 
 
 =head1 SEE ALSO
