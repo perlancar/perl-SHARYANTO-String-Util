@@ -1,5 +1,13 @@
 Revision history for SHARYANTO-String-Util
 
+0.28    2014-07-25 (SHARYANTO)
+
+        - Rename function: qqquote -> double_quote (old name is now undocumented
+          and deprecated but will be supported for some time).
+
+        - Add function: single_quote().
+
+
 0.27    2014-05-22 (SHARYANTO)
 
         - Add functions: common_prefix(), common_suffix().

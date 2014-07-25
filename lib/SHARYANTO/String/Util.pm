@@ -224,6 +224,8 @@ sub common_suffix {
 1;
 # ABSTRACT: String utilities
 
+=for Pod::Coverage ^(qqquote)$
+
 =head1 FUNCTIONS
 
 =head2 ltrim($str) => STR
