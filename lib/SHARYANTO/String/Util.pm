@@ -21,8 +21,8 @@ our @EXPORT_OK = qw(
                        linenum
                        pad
                        qqquote
-                       qq_quote
-                       q_quote
+                       single_quote
+                       double_quote
                        common_prefix
                        common_suffix
                );
@@ -155,7 +155,7 @@ my %esc = (
 );
 
 # put a string value in double quotes
-sub qq_quote {
+sub double_quote {
   local($_) = $_[0];
   # If there are many '"' we might want to use qq() instead
   s/([\\\"\@\$])/\\$1/g;
@@ -174,9 +174,14 @@ sub qq_quote {
 # END COPY PASTE FROM Data::Dump
 
 # old name, deprecated, will be removed in the future
-sub qqquote { goto &qq_quote; }
+sub qqquote { goto &double_quote; }
 
-sub q_quote {
+# will write this in the future, will produce "qq(...)" and "q(...)" literal
+# representation
+#sub qq_quote {}
+#sub q_quote {}
+
+sub single_quote {
   local($_) = $_[0];
   s/([\\'])/\\$1/g;
   return qq('$_');
@@ -328,32 +333,32 @@ left+right padding to center the text.
 C<$padchar> is whitespace if not specified. It should be string having the width
 of 1 column.
 
-=head2 qq_quote($str) => STR
+=head2 double_quote($str) => STR
 
-Quote or encode C<$str> to the Perl double quote (C<qq>) literal representation
+Quote or encode C<$str> to the Perl double quote (C<">) literal representation
 of the string. Example:
 
- say qq_quote("a");        # => "a"
- say qq_quote("a\n");      # => "a\n"
- say qq_quote('"');        # => "\""
- say qq_quote('$foo');     # => "\$foo"
+ say double_quote("a");        # => "a"     (with the quotes)
+ say double_quote("a\n");      # => "a\n"
+ say double_quote('"');        # => "\""
+ say double_quote('$foo');     # => "\$foo"
 
 This code is taken from C<quote()> in L<Data::Dump>. Maybe I didn't look more
 closely, but I couldn't a module that provides a function to do something like
 this. L<String::Escape>, for example, provides C<qqbackslash> but it does not
 escape C<$>.
 
-=head2 q_quote($str) => STR
+=head2 single_quote($str) => STR
 
-Like C<qq_quote> but will produce a Perl single quote literal representation
+Like C<double_quote> but will produce a Perl single quote literal representation
 instead of the double quote ones. In single quotes, only literal backslash C<\>
 and single quote character C<'> are escaped, the rest are displayed as-is, so
 the result might span multiple lines or contain other non-printable characters.
 
- say q_quote("Mom's");    # => 'Mom\'s'
- say q_quote("a\\");      # => 'a\\"
- say q_quote('"');        # => '"'
- say q_quote("\$foo");    # => '$foo'
+ say single_quote("Mom's");    # => 'Mom\'s' (with the quotes)
+ say single_quote("a\\");      # => 'a\\"
+ say single_quote('"');        # => '"'
+ say single_quote("\$foo");    # => '$foo'
 
 =head2 common_prefix(@LIST) => STR
 

@@ -18,8 +18,8 @@ use SHARYANTO::String::Util qw(
                                   indent
                                   linenum
                                   pad
-                                  qq_quote
-                                  q_quote
+                                  double_quote
+                                  single_quote
                                   common_prefix
                                   common_suffix
                           );
@@ -111,16 +111,16 @@ subtest "pad" => sub {
     is(pad("1234", 1, undef, undef, 1), "1", "trunc=1");
 };
 
-subtest "qq_quote" => sub {
-    is(qq_quote("a"),    '"a"');
-    is(qq_quote("a\n"),  '"a\\n"');
-    is(qq_quote('"'),    '"\\""');
-    is(qq_quote('$foo'), '"\\$foo"');
+subtest "double_quote" => sub {
+    is(double_quote("a"),    '"a"');
+    is(double_quote("a\n"),  '"a\\n"');
+    is(double_quote('"'),    '"\\""');
+    is(double_quote('$foo'), '"\\$foo"');
 };
 
-subtest "q_quote" => sub {
-    is(q_quote("a\"'\$\\"), qq('a"\\'\$\\\\'));
-    is(q_quote("a\nb"), q('a
+subtest "single_quote" => sub {
+    is(single_quote("a\"'\$\\"), qq('a"\\'\$\\\\'));
+    is(single_quote("a\nb"), q('a
 b'));
 };
 
