@@ -21,6 +21,8 @@ our @EXPORT_OK = qw(
                        linenum
                        pad
                        qqquote
+                       qq_quote
+                       q_quote
                        common_prefix
                        common_suffix
                );
@@ -153,7 +155,7 @@ my %esc = (
 );
 
 # put a string value in double quotes
-sub qqquote {
+sub qq_quote {
   local($_) = $_[0];
   # If there are many '"' we might want to use qq() instead
   s/([\\\"\@\$])/\\$1/g;
@@ -170,6 +172,15 @@ sub qqquote {
   return qq("$_");
 }
 # END COPY PASTE FROM Data::Dump
+
+# old name, deprecated, will be removed in the future
+sub qqquote { goto &qq_quote; }
+
+sub q_quote {
+  local($_) = $_[0];
+  s/([\\'])/\\$1/g;
+  return qq('$_');
+}
 
 sub common_prefix {
     return undef unless @_;
@@ -317,20 +328,32 @@ left+right padding to center the text.
 C<$padchar> is whitespace if not specified. It should be string having the width
 of 1 column.
 
-=head2 qqquote($str) => STR
+=head2 qq_quote($str) => STR
 
 Quote or encode C<$str> to the Perl double quote (C<qq>) literal representation
 of the string. Example:
 
- say qqquote("a");        # => "a"
- say qqquote("a\n");      # => "a\n"
- say qqquote('"');        # => "\""
- say qqquote('$foo');     # => "\$foo"
+ say qq_quote("a");        # => "a"
+ say qq_quote("a\n");      # => "a\n"
+ say qq_quote('"');        # => "\""
+ say qq_quote('$foo');     # => "\$foo"
 
 This code is taken from C<quote()> in L<Data::Dump>. Maybe I didn't look more
 closely, but I couldn't a module that provides a function to do something like
 this. L<String::Escape>, for example, provides C<qqbackslash> but it does not
 escape C<$>.
+
+=head2 q_quote($str) => STR
+
+Like C<qq_quote> but will produce a Perl single quote literal representation
+instead of the double quote ones. In single quotes, only literal backslash C<\>
+and single quote character C<'> are escaped, the rest are displayed as-is, so
+the result might span multiple lines or contain other non-printable characters.
+
+ say q_quote("Mom's");    # => 'Mom\'s'
+ say q_quote("a\\");      # => 'a\\"
+ say q_quote('"');        # => '"'
+ say q_quote("\$foo");    # => '$foo'
 
 =head2 common_prefix(@LIST) => STR
 
